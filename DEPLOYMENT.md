@@ -10,17 +10,17 @@
 
 | Mục | Nội dung |
 |-----|----------|
-| Họ và tên | (điền họ tên) |
-| Mã học viên | (điền mã học viên) |
-| Repo | (điền link repo K4-L3A-DAY12-HoVaTen-MSSV-CloudServicesAndDeployment) |
+| Họ và tên | Bùi Minh Quân |
+| Mã học viên | 2A202602958 |
+| Repo | https://github.com/NeoGGz/K4-L3A-BuiMinhQuan-2A202602958-Cloud-Service-And-Deployment |
 
 ## Service
 
 | Mục | Nội dung |
 |-----|----------|
-| Public URL | https://TODO-thay-bang-url-that.up.railway.app |
-| Platform | Railway / Render / Cloud Run — (điền platform bạn dùng) |
-| Ngày deploy | (điền ngày) |
+| Public URL | https://day12-agent-wq03.onrender.com |
+| Platform | Render (Blueprint) |
+| Ngày deploy | 2026-09-28 |
 
 ## Biến Môi Trường Đã Set Trên Cloud
 
@@ -28,9 +28,9 @@ Ghi tên biến và **nguồn giá trị**, không ghi giá trị:
 
 | Biến | Đã set | Ghi chú |
 |------|--------|---------|
-| `PORT` | ✅ | platform tự gán |
+| `PORT` | ✅ | `10000`, khai báo trong Blueprint cho Render |
 | `AGENT_API_KEY` | ✅ | đặt trong dashboard, không nằm trong repo |
-| `REDIS_URL` | ✅ | (điền: Redis add-on của platform / Upstash / ...) |
+| `REDIS_URL` | ✅ | Render Key Value `day12-redis` (connection string từ Blueprint) |
 | `RATE_LIMIT_PER_MINUTE` | ✅ | 10 |
 | `MONTHLY_BUDGET_USD` | ✅ | 10.0 |
 | `LOG_LEVEL` | ✅ | INFO |
@@ -70,10 +70,10 @@ done; echo
 
 ## Kết Quả Chạy Thật
 
-Dán output của các lệnh trên vào đây:
+Dữ liệu xác minh hiện có:
 
 ```
-(điền output)
+Deploy Render commit `7a315e0` báo **Deploy succeeded | Live**. Application logs xác nhận Uvicorn chạy tại `0.0.0.0:10000`, `GET /` trả `200 OK`, log `Your service is live`, và các health check `GET /health` trả `200 OK` (2026-09-28). Máy triển khai bị Microsoft Edge chặn domain `onrender.com` (`ERR_BLOCKED_BY_CLIENT`) và PowerShell không kết nối được, nên chưa xác nhận trực tiếp `/ready` và `/ask` từ máy này.
 ```
 
 ## Ảnh Chụp Màn Hình
@@ -97,5 +97,5 @@ Không đăng ký được tài khoản cloud? Vẫn nộp được bài, nhưng
 5. Ghi rõ lý do không deploy được vào phần dưới đây:
 
 ```
-(điền lý do nếu dùng phương án dự phòng, ngược lại xóa mục này)
+Không dùng phương án dự phòng.
 ```
