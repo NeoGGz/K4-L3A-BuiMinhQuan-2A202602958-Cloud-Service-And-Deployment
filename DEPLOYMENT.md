@@ -70,11 +70,11 @@ done; echo
 
 ## Kết Quả Chạy Thật
 
-Dữ liệu xác minh hiện có:
+`pytest tests/test_cp5.py -v` cho kết quả **8 passed, 5 skipped** (2026-09-28):
 
-```
-Deploy Render commit `7a315e0` báo **Deploy succeeded | Live**. Application logs xác nhận Uvicorn chạy tại `0.0.0.0:10000`, `GET /` trả `200 OK`, log `Your service is live`, và các health check `GET /health` trả `200 OK` (2026-09-28). Máy triển khai bị Microsoft Edge chặn domain `onrender.com` (`ERR_BLOCKED_BY_CLIENT`) và PowerShell không kết nối được, nên chưa xác nhận trực tiếp `/ready` và `/ask` từ máy này.
-```
+- Đạt: URL HTTPS, `/health` trả 200, `/ready` trả 200, `/ask` không có key trả 401; thông tin deploy đầy đủ và không ghi secret.
+- Bỏ qua: `/ask` với key hợp lệ vì chưa truyền `DEPLOY_API_KEY` vào tiến trình pytest; bốn kiểm tra `LOCAL_FALLBACK` không áp dụng vì deploy cloud đang được dùng.
+- Render logs xác nhận commit `7a315e0` **Deploy succeeded | Live**, `GET /` trả `200 OK`, Uvicorn chạy trên `0.0.0.0:10000` và health check trả `200 OK`.
 
 ## Ảnh Chụp Màn Hình
 
