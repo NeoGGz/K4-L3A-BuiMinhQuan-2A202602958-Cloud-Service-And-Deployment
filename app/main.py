@@ -17,7 +17,7 @@ from contextlib import asynccontextmanager
 from functools import lru_cache
 
 from fastapi import Depends, FastAPI
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel, Field
 
 from utils.mock_llm import ask_llm
@@ -68,6 +68,48 @@ app = FastAPI(title="Day 12 Production Agent", version=SERVICE_VERSION, lifespan
 
 class AskRequest(BaseModel):
     question: str = Field(min_length=1, max_length=2000)
+
+
+# ─────────────────────────────────────────────────────────────
+# Public landing page
+# ─────────────────────────────────────────────────────────────
+@app.get("/", response_class=HTMLResponse)
+def index():
+    """Friendly entry point for people opening the service URL in a browser."""
+    return f"""<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{SERVICE_NAME} · Production Agent</title>
+    <style>
+      :root {{ color-scheme: light dark; font: 16px/1.5 system-ui, sans-serif; }}
+      body {{ margin: 0; min-height: 100vh; display: grid; place-items: center;
+        background: #101827; color: #eef4ff; }}
+      main {{ width: min(42rem, calc(100% - 3rem)); padding: 2rem;
+        border: 1px solid #334155; border-radius: 1rem; background: #172338; }}
+      h1 {{ margin: 0 0 .25rem; }}
+      .status {{ color: #6ee7b7; }}
+      li {{ margin: .6rem 0; }}
+      a {{ color: #93c5fd; }}
+      code {{ color: #c4b5fd; }}
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="status">● Service is running</p>
+      <h1>{SERVICE_NAME}</h1>
+      <p>Day 12 Production Agent API · version {SERVICE_VERSION}</p>
+      <h2>Endpoints</h2>
+      <ul>
+        <li><code>GET /health</code> — liveness check</li>
+        <li><code>GET /ready</code> — readiness and Redis check</li>
+        <li><code>POST /ask</code> — ask the agent (requires <code>X-API-Key</code>)</li>
+      </ul>
+      <p><a href="/docs">Open interactive API docs</a></p>
+    </main>
+  </body>
+</html>"""
 
 
 # ─────────────────────────────────────────────────────────────
