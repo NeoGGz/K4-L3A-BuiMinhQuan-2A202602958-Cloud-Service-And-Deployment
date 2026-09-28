@@ -15,6 +15,8 @@ services:
         sync: false
       - key: LOG_LEVEL
         value: INFO
+      - key: PORT
+        value: "10000"
       - key: RATE_LIMIT_PER_MINUTE
         value: "10"
       - key: MONTHLY_BUDGET_USD
@@ -22,10 +24,10 @@ services:
       - key: REDIS_URL
         fromService:
           name: day12-redis
-          type: redis
+          type: keyvalue
           property: connectionString
 
-  - type: redis
+  - type: keyvalue
     name: day12-redis
     plan: free
     ipAllowList: []
